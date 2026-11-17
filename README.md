@@ -4,6 +4,16 @@ A local web app for **AI-assisted qualitative coding** of interview transcripts 
 
 Built for academic qualitative researchers and UX / market research teams. This is a working prototype.
 
+**Website and browser demo:** https://eimonamjadi.github.io/QualCoder/ (the demo runs the real UI in your browser with the offline `mock` coder, not an AI model).
+
+## Website (GitHub Pages)
+
+`scripts/build_site.sh` builds a static site into `_site/`: a landing page (`site/index.html`) and, under `/demo/`, the app's own UI from `static/` with `site/demo-api.js` answering the `/api/*` calls in the browser (data in `localStorage`). `.github/workflows/pages.yml` builds and deploys it on every push to `main`. One-time setup: **Settings → Pages → Source: GitHub Actions**.
+
+To preview locally: `./scripts/build_site.sh && python -m http.server -d _site`.
+
+`demo-api.js` is a JavaScript port of the routes, retrieval, segmentation and mock coder, so if you change those in Python, change it too.
+
 ## What it does
 
 1. **Codebook editor.** Define each code in your own words: definition, include-when, exclude-when, and example quotes (positive, or negative = "this is *not* the code").
