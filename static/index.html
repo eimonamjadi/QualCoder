@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QualCoder</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <div class="brand">QualCoder <span class="muted">AI-assisted qualitative coding, with receipts</span></div>
+  <nav>
+    <button data-tab="review" class="active">Review</button>
+    <button data-tab="codebook">Codebook</button>
+    <button data-tab="prompts">Prompts</button>
+    <button data-tab="documents">Documents</button>
+    <button data-tab="settings">Settings &amp; export</button>
+  </nav>
+  <div id="provider-badge" class="badge"></div>
+</header>
+
+<main>
+  <!-- REVIEW ------------------------------------------------------------->
+  <section id="tab-review" class="tab active">
+    <div class="toolbar">
+      <label>Document <select id="review-doc"></select></label>
+      <button id="code-all" class="primary">Code all passages</button>
+      <button id="code-uncoded">Code uncoded only</button>
+      <span id="progress" class="muted"></span>
+      <label class="right"><input type="checkbox" id="filter-pending"> Only passages with pending codes</label>
+    </div>
+    <div id="empty-hint" class="hint hidden">
+      No documents yet. Go to <b>Documents</b> to upload one, or <button id="load-samples-2" class="link">load the sample codebook and transcript</button>.
+    </div>
+    <div id="passages"></div>
+  </section>
+
+  <!-- CODEBOOK ----------------------------------------------------------->
+  <section id="tab-codebook" class="tab">
+    <div class="two-col">
+      <div>
+        <h2>Codes</h2>
+        <div id="code-list"></div>
+      </div>
+      <div>
+        <h2 id="code-form-title">New code</h2>
+        <form id="code-form" class="card">
+          <input type="hidden" name="id">
+          <label>Name <input name="name" required></label>
+          <label>Definition, in your words <textarea name="definition" rows="3"></textarea></label>
+          <label>Include when <textarea name="include_when" rows="2"></textarea></label>
+          <label>Exclude when <textarea name="exclude_when" rows="2"></textarea></label>
+          <div class="row"><button class="primary" type="submit">Save code</button>
+            <button type="button" id="code-form-reset">Clear</button></div>
+        </form>
+        <div id="example-panel" class="card hidden">
+          <h3>Examples for <span id="example-code-name"></span></h3>
+          <p class="muted">Positive examples show the code; negative ones show what it is <i>not</i>. Corrections you make in Review land here too.</p>
+          <div id="example-list"></div>
+          <form id="example-form">
+            <label>Quote <textarea name="quote" rows="2" required></textarea></label>
+            <label>Note (why it fits or not) <input name="note"></label>
+            <label>Type <select name="polarity"><option value="positive">Positive</option><option value="negative">Negative (not this code)</option></select></label>
+            <button class="primary" type="submit">Add example</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>Import / export</h3>
+          <a class="button" href="/api/codebook/export">Download codebook.json</a>
+          <label class="button">Import codebook.json <input type="file" id="codebook-import" accept=".json" hidden></label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMPTS ------------------------------------------------------------>
+  <section id="tab-prompts" class="tab">
+    <div class="two-col">
+      <div>
+        <h2>Your prompts</h2>
+        <p class="muted">Active prompts are added to every coding request as <code>PROMPT:n</code>, so the model can cite which instruction it followed.</p>
+        <div id="prompt-list"></div>
+        <form id="prompt-form" class="card">
+          <input type="hidden" name="id">
+          <label>Name <input name="name" required></label>
+          <label>Instruction <textarea name="text" rows="5"></textarea></label>
+          <label><input type="checkbox" name="active" checked> Active</label>
+          <div class="row"><button class="primary" type="submit">Save prompt</button>
+            <button type="button" id="prompt-form-reset">Clear</button></div>
+        </form>
+      </div>
+      <div>
+        <h2>Built-in instructions</h2>
+        <p class="muted">Always sent first. They define the output contract (quote, justification, cited refs) the app checks.</p>
+        <pre id="base-instructions" class="prompt"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCUMENTS ---------------------------------------------------------->
+  <section id="tab-documents" class="tab">
+    <div class="two-col">
+      <div>
+        <h2>Documents</h2>
+        <table id="doc-table"><thead><tr><th>Name</th><th>Passages</th><th>Pending</th><th>Accepted</th><th></th></tr></thead><tbody></tbody></table>
+        <p><button id="load-samples">Load sample codebook + transcript</button></p>
+      </div>
+      <div>
+        <h2>Add a document</h2>
+        <form id="upload-form" class="card">
+          <label>File (.txt, .md, .docx, .pdf) <input type="file" name="file" required></label>
+          <label>Display name (optional) <input name="name"></label>
+          <button class="primary" type="submit">Upload</button>
+        </form>
+        <form id="paste-form" class="card">
+          <label>Name <input name="name" required></label>
+          <label>Or paste text <textarea name="text" rows="8" required></textarea></label>
+          <button class="primary" type="submit">Add</button>
+        </form>
+        <p class="muted">Documents are split into passages at blank lines and at speaker labels like <code>P07:</code>. Each passage is coded on its own, with the passage before it as context.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETTINGS ----------------------------------------------------------->
+  <section id="tab-settings" class="tab">
+    <div class="two-col">
+      <div class="card">
+        <h2>Model</h2>
+        <div id="provider-list"></div>
+        <p class="muted">Keys are read from environment variables or a local <code>.env</code> file. They are never shown or stored by the app.</p>
+        <label><input type="checkbox" id="learn-accepted"> Add accepted codes to the example store (rejections and fixes are always added)</label>
+      </div>
+      <div class="card">
+        <h2>Export</h2>
+        <p><a class="button" href="/api/export/segments.csv">Coded segments (.csv)</a></p>
+        <p class="muted">Every applied code with its quote, justification, cited refs, flags and review status.</p>
+        <p><a class="button" href="/api/export/training.jsonl">Corrections as training data (.jsonl)</a></p>
+        <p class="muted">Reviewed passages in chat format (system, user, assistant). A starting point for fine-tuning an open model later (e.g. LoRA with Unsloth). Not used by the app itself.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog id="modal"><div id="modal-body"></div><form method="dialog"><button>Close</button></form></dialog>
+<div id="toast" class="hidden"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+Interview 07 — community college transfer student (synthetic example data)
+
+Interviewer: Thanks for joining. Can you tell me about your first quarter after transferring?
+
+P07: Honestly it was rough. I didn't know anyone in my classes, and everyone seemed to already have their groups from freshman year. I'd sit in the back and leave right after lecture. Some weeks I didn't talk to a single classmate.
+
+Interviewer: What changed, if anything?
+
+P07: In winter a TA put us into assigned study groups for the stats class. At first I hated it, but by week four the group chat was the first thing I checked every morning. They were my people. We'd meet at the library on Sundays and actually laugh about the problem sets.
+
+Interviewer: When you got stuck on coursework, what did you do?
+
+P07: For a long time, nothing. I didn't want to look like the transfer kid who couldn't keep up, so I never went to office hours. Eventually my study group dragged me to the professor's office hours and she was super nice about it.
+
+P07: I also started using ChatGPT, but in a specific way. I'd paste the problem in and ask it to explain only the first step, then I'd try the rest myself. If I let it do everything I didn't learn anything and I bombed the quiz.
+
+Interviewer: How did work and money fit into all this?
+
+P07: I was working about twenty-five hours a week at a grocery store to cover rent. That's part of why I couldn't stay after class. Some nights I started homework after midnight. I dropped to twelve units in spring because I just couldn't afford to fail a class and pay for it twice.
+
+Interviewer: Anything else you want to share?
+
+P07: Just that the group thing made the difference. If the TA hadn't forced us together I think I would have transferred out or quit.

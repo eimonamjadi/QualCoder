@@ -1,0 +1,62 @@
+{
+  "codes": [
+    {
+      "name": "Belonging",
+      "definition": "The participant describes feeling accepted, included or part of a community (class, program, peer group, field).",
+      "include_when": "Explicit statements about fitting in, being welcomed, having 'my people', or feeling like a real member.",
+      "exclude_when": "Mere mentions of other people without any sense of inclusion or exclusion. Use 'Isolation' for the absence of belonging.",
+      "examples": [
+        {"quote": "For the first time I felt like I was actually one of them, not just a visitor.", "note": "Explicit feeling of membership."},
+        {"quote": "The study group became my people.", "note": ""}
+      ]
+    },
+    {
+      "name": "Isolation",
+      "definition": "The participant describes feeling alone, excluded, invisible or disconnected from others in the learning setting.",
+      "include_when": "Being left out, not knowing anyone, having no one to ask, feeling like an outsider.",
+      "exclude_when": "Choosing to work alone without any negative feeling.",
+      "examples": [
+        {"quote": "I'd sit in the back and nobody would talk to me for the whole quarter.", "note": ""},
+        {"quote": "I prefer doing problem sets alone, it's faster.", "note": "Working alone by choice is not isolation.", "polarity": "negative"}
+      ]
+    },
+    {
+      "name": "Help-seeking",
+      "definition": "The participant describes asking for, or deciding not to ask for, academic or personal help (from instructors, peers, tutors, services or AI tools).",
+      "include_when": "Office hours, tutoring, asking classmates, emailing a professor, using a chatbot to get unstuck, and also explicit decisions to avoid asking.",
+      "exclude_when": "Receiving help that was not sought (e.g., an instructor's general announcement).",
+      "examples": [
+        {"quote": "I finally went to office hours in week six and wished I'd gone in week one.", "note": ""},
+        {"quote": "I didn't want to look stupid, so I never raised my hand.", "note": "Deciding not to seek help still counts."}
+      ]
+    },
+    {
+      "name": "AI tool use",
+      "definition": "Any description of using generative AI (ChatGPT, Claude, Copilot, etc.) for coursework, studying or research.",
+      "include_when": "How, when or why the participant uses AI tools, including attitudes about using them.",
+      "exclude_when": "General technology use with no AI component (e.g., Canvas, Zoom).",
+      "examples": [
+        {"quote": "I'd paste the problem into ChatGPT and ask it to explain the first step only.", "note": ""}
+      ]
+    },
+    {
+      "name": "Financial stress",
+      "definition": "Worry or constraints related to money that affect the participant's studies.",
+      "include_when": "Working to pay tuition, cost of books or housing, choosing fewer units for financial reasons.",
+      "exclude_when": "Neutral mentions of having a job with no stated pressure.",
+      "examples": [
+        {"quote": "I was working thirty hours a week just to cover rent, so homework happened at 1am.", "note": ""}
+      ]
+    }
+  ],
+  "prompts": [
+    {
+      "name": "Interviewer turns",
+      "text": "Do not code what the interviewer says; only code the participant's own statements. If a passage is an interviewer question, return no codes."
+    },
+    {
+      "name": "Be conservative",
+      "text": "Prefer fewer, well-supported codes. Apply a code only when the passage itself shows it; do not infer from what the participant might mean."
+    }
+  ]
+}
